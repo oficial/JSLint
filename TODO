@@ -1,0 +1,5 @@
+TODO
+- Adicionar suporte à strings multi-linha (OK)
+- Remover erro "This function needs a 'use strict' pragma" (OK)
+- Criar um entrada em "allowed_option" para incluir os globais normais do engine
+- Ignorar undelines
