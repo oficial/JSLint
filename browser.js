@@ -132,8 +132,8 @@ ADSAFE.lib("browser_ui", function () {
 // Generate the reports.
 
             var error_html = REPORT.error(result);
-            var function_html = REPORT.function(result);
-            var property_text = REPORT.property(result);
+            var function_html = ""; //REPORT.function(result);
+            var property_text = ""; //REPORT.property(result);
 
 // Display the reports.
 
@@ -142,7 +142,7 @@ ADSAFE.lib("browser_ui", function () {
                 ? "none"
                 : "block");
             setHTML(report_div, function_html);
-            report_field.style("display", "block");
+            report_field.style("display", /*"block"*/ "none");
             if (property_text) {
                 property.value(property_text);
                 property_fieldset.style("display", "block");

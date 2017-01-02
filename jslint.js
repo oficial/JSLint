@@ -183,8 +183,10 @@ var jslint = (function JSLint() {
         this: true,
         white: true
 
-        //DYAD
+        //-------------------- DYAD ---------------------
         ,use_strict: false
+		,use_multiline: true
+        ,use_triple_equal_sign: false
     };
 
     var spaceop = {
@@ -501,7 +503,14 @@ var jslint = (function JSLint() {
             code: code
         };
         if (a !== undefined) {
-            warning.a = a;
+            //-------------------- DYAD ---------------------
+            // Truncando o tamanho da string nas mensagens de alerta
+            // warning.a = a;
+            if (a.length > 50) {
+                warning.a = a.substr(0, 50) + '...';
+            } else {
+                warning.a = a;
+            }
         }
         if (b !== undefined) {
             warning.b = b;
@@ -1170,11 +1179,19 @@ var jslint = (function JSLint() {
                     escape();
                     break;
                 case "":
-                    //-------- DYAD ---------
-                    //return stop_at("unclosed_string", line, column);
-                    source_line = next_line();
-                    next_char();
-                    //--------------------------
+                    //-------------------- DYAD ---------------------
+					// Se chegou ao final da linha sem fechar a string,
+					// e esta configurado para aceitar strings multilinha,
+					// entao carregamos uma nova linha e continuamos;
+					if (option.use_multiline) {
+                    	source_line = next_line();
+                    	next_char();
+					} else {
+						//// Caso contrario, considerar erro de sintaxe e
+						//// parar a analise imediatamente com o erro abaixo;
+                    	return stop_at("unclosed_string", line, column);
+					}
+                    //-----------------------------------------------
                     break;
                 case "`":
                     if (mega_mode) {
@@ -3721,9 +3738,9 @@ var jslint = (function JSLint() {
                 }
             } else {
                 if (thing.block.strict === undefined) {
+                    //-------------------- DYAD ---------------------
+                    // Parametrizando a obrigatoriedade do uso do "strict" dentro de cada bloco
                     //warn("use_strict", thing);
-
-                    // DYAD
                     if (option.use_strict) {
                         warn("use_strict", thing);
                     };
@@ -3846,12 +3863,15 @@ var jslint = (function JSLint() {
         }
     });
     preaction("binary", "==", function (thing) {
-
-        warn("expected_a_b", thing, "===", "==");
+        //-------------------- DYAD ---------------------
+        // Parametrizando a obrigatoriedade do uso de "3 iguais" nos testes de igualdade
+        if (option.use_triple_equal_sign) {
+            warn("expected_a_b", thing, "===", "==");
+        }
     });
     preaction("binary", "!=", function (thing) {
 
-        warn("expected_a_b", thing, "!==", "!=");
+        //warn("expected_a_b", thing, "!==", "!=");
     });
     preaction("binary", "=>", preaction_function);
     preaction("binary", "||", function (thing) {
@@ -4427,7 +4447,25 @@ var jslint = (function JSLint() {
                                 unqmark();
                                 at_margin(-4);
                             } else {
-                                at_margin(0);
+                                //-------------------- DYAD ---------------------
+                                // Comentando a linha abaixo para que seja permitido
+                                // abrir um parentese de chamada de função e uma
+                                // string numa linha e continuar na proxima linha.
+                                // Exemplo:
+                                //      var ds = database.query("
+                                //          select *
+                                //          from AAA
+                                //          where BBB"
+                                //      );
+                                // Antes a abertura da string tinha que estar,
+                                // obrigatoriamente, na proxima linha.
+                                // Exemplo:
+                                //      var ds = database.query(
+                                //          "select *
+                                //          from AAA
+                                //          where BBB"
+                                //      );
+                                //at_margin(0);
                             }
                         } else {
                             if (right.statement || right.role === "label") {

@@ -345,8 +345,8 @@ function foo() {
     // TODO - Testar
     debugger;
     var ar = [];
-    var ds = database.query(
-        '------------------------------------------------------------------------
+    var ds = database.query('
+        ------------------------------------------------------------------------
         -- Processo: Protocolos de atendimento
         -- Consulta: Apontamentos dos protocolos
         ------------------------------------------------------------------------
@@ -390,6 +390,9 @@ foo();</textarea>
             <div><label><input title="single" type="checkbox" checked>single quote strings</label></div>
             <div><label><input title="this" type="checkbox">this</label></div>
             <div><label><input title="white" type="checkbox">whitespace mess</label></div>
+
+            <div><label><input title="use_multiline" type="checkbox">Multi-line string</label></div>
+            <div><label><input title="use_triple_equal_sign" type="checkbox">Triple equal sign</label></div>
           </div>
           <div>Number...
             <div><label><input type=text title=maxlen>Maximum line length</label></div>

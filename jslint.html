@@ -325,26 +325,47 @@ a:link {
 <script src="adsafe.js"></script>
 <script src="report.js"></script>
 </head>
-<body><div id="JSLINT_TITLE">J<u>SLint</u></div>
+<body>
+<!-- <div id="JSLINT_TITLE">J<u>SLint</u></div> -->
 <div id="JSLINT_">
   <div style="float: left; margin-bottom: 1em; margin-left: 2em;">
   </div>
-  <ul style="float: right; margin: 1em; padding-right: 1em;">
-    <li><a href="help.html">Read the instructions.</a></li>
-    <li><a href="http://www.amazon.com/exec/obidos/ASIN/0596517742/wrrrldwideweb" target="_blank">Enjoy&nbsp;<i>The Good Parts</i>.</a></li>
-  </ul>
   <fieldset><legend>Source</legend>
-      <textarea id="JSLINT_NUMBER" rows="18" readonly=true></textarea><textarea
-      id="JSLINT_SOURCE" rows="18" autofocus
-      placeholder="// Paste JavaScript source or JSON text here."></textarea>
+      <textarea id="JSLINT_NUMBER" rows="10" readonly=true></textarea><textarea
+      id="JSLINT_SOURCE" rows="10" autofocus
+      placeholder="// Paste JavaScript source or JSON text here.">
+var a = "aaaa";
+
+function foo() {
+    // TODO - Testar
+    debugger;
+    var ar = [];
+    var ds = database.query(
+        '------------------------------------------------------------------------
+        -- Processo: Protocolos de atendimento
+        -- Consulta: Apontamentos dos protocolos
+        ------------------------------------------------------------------------
+        select *
+          from EVENTO
+         where CLASSE = -1895910101 -- Apontamentos de protocolos de atendimento'
+    );
+    for (ds.first(); !ds.eof; ds.next()) {
+        if (ds.campo == 1) {
+            ar.push(ds.chave);
+        }
+    }
+
+    return ar;
+}
+foo();</textarea>
   </fieldset>
   <div style="text-align: center;">
       <button name=JSLint>J<u>SLint</u></button>
       <button name=clear>clear</button>
   </div>
-  <fieldset id=JSLINT_WARNINGS style="display: none;"><legend>Warnings</legend><div></div>
+  <fieldset id="JSLINT_WARNINGS" style="display: none;"><legend>Warnings</legend><div></div>
   </fieldset>
-  <fieldset id=JSLINT_REPORT style="display: none;">
+  <fieldset id="JSLINT_REPORT" style="display: none;">
     <legend>Function Report</legend>
     <div></div>
   </fieldset>
@@ -353,38 +374,42 @@ a:link {
     <textarea id=JSLINT_PROPERTY rows="8" readonly=true></textarea>
   </fieldset>
   <div id=JSLINT_AUX style="display: none; text-align: center;">
-      <button name=select id=JSLINT_SELECT>select property</button>
-      <button name=JSLint>J<u>SLint</u></button>
-      <button name=clear>clear</button>
-      <button name=options>clear options</button>
+      <button name="select" id="JSLINT_SELECT">select property</button>
+      <button name="JSLint">J<u>SLint</u></button>
+      <button name="clear">clear</button>
+      <button name="options">clear options</button>
   </div>
-  <fieldset id=JSLINT_OPTIONS><legend>Options</legend>
+  <fieldset id="JSLINT_OPTIONS"><legend>Options</legend>
     <div>Assume...
-      <div><label><input title=devel type=checkbox>in development</label></div>
-      <div><label><input title=es6 type=checkbox>ES6</label></div>
-      <div><label><input title=browser type=checkbox>a browser</label></div>
-      <div><label><input title=couch type=checkbox>CouchDB</label></div>
-      <div><label><input title=node type=checkbox>Node.js</label></div>
+      <div><label><input title="devel" type="checkbox" checked="">in development</label></div>
+      <div><label><input title="es6" type="checkbox">ES6</label></div>
+      <div><label><input title="browser" type="checkbox">a browser</label></div>
+      <div><label><input title="couch" type="checkbox">CouchDB</label></div>
+      <div><label><input title="node" type="checkbox">Node.js</label></div>
     <br>Fudge...
-      <div><label><input id="JSLINT_FUDGE" title=fudge type=checkbox>First line number is 1</label></div>
+      <div><label><input id="JSLINT_FUDGE" title="fudge" type="checkbox">First line number is 1</label></div>
     </div>
     <div>Tolerate...
-      <div><label><input title=bitwise type=checkbox>bitwise operators</label></div>
-      <div><label><input title=eval type=checkbox>eval</label></div>
-      <div><label><input title=for type=checkbox>for statement</label></div>
-      <div><label><input title=multivar type=checkbox>multiple vars</label></div>
-      <div><label><input title=single type=checkbox>single quote strings</label></div>
-      <div><label><input title=this type=checkbox>this</label></div>
-      <div><label><input title=white type=checkbox>whitespace mess</label></div>
+      <div><label><input title="bitwise" type="checkbox">bitwise operators</label></div>
+      <div><label><input title="eval" type="checkbox">eval</label></div>
+      <div><label><input title="for" type="checkbox" checked>for statement</label></div>
+      <div><label><input title="multivar" type="checkbox">multiple vars</label></div>
+      <div><label><input title="single" type="checkbox" checked>single quote strings</label></div>
+      <div><label><input title="this" type="checkbox">this</label></div>
+      <div><label><input title="white" type="checkbox">whitespace mess</label></div>
     </div>
     <div>Number...
       <div><label><input type=text title=maxlen>Maximum line length</label></div>
       <div><label><input type=text title=maxerr>Maximum warnings</label></div>
     </div>
     <div>Global variables...
-      <textarea id=JSLINT_GLOBAL title=global placeholder="imported globals here"></textarea>
+      <textarea id="JSLINT_GLOBAL" title="global" placeholder="imported globals here">database</textarea>
     </div>
   </fieldset>
+  <ul style="float: left; margin: 1em; padding-right: 1em;">
+    <li><a href="help.html">Read the instructions.</a></li>
+    <li><a href="http://www.amazon.com/exec/obidos/ASIN/0596517742/wrrrldwideweb" target="_blank">Enjoy&nbsp;<i>The Good Parts</i>.</a></li>
+  </ul>
   <script>
     ADSAFE.id("JSLINT_");
   </script>
@@ -396,7 +421,7 @@ a:link {
     });
   </script>
 </div>
-<center>
+<!-- <center>
 <a href="http://www.JSLint.com/"><img src="image/jslintpill.gif" width="36" height="17" border="0"></a>
 <a href="https://github.com/douglascrockford/JSLint"><img src="image/github.gif" width="39" height="16" border="0"></a>
 <a href="https://plus.google.com/communities/104441363299760713736"><img src="image/gpill.gif" width="36" height="17" border="0"></a>
@@ -404,5 +429,5 @@ a:link {
 <a href="http://www.ADsafe.org/"><img src="image/adsafepill.gif" width="36" height="17" border="0"></a>
 <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=RDLHY5MSG3LZW"><img src="image/pppill.gif" width="36" height="17" border="0"></a>
 <a href="http://www.1and1.com/?k_id=10219574"><img src="image/1and1pill.gif" width="36" height="17" border="0"></a>
-</center>
+</center> -->
 </body></html>

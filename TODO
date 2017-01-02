@@ -1,5 +1,6 @@
 TODO
-- Adicionar suporte à strings multi-linha (OK)
+- Permitir strings multi-linha (OK)
 - Remover erro "This function needs a 'use strict' pragma" (OK)
-- Criar um entrada em "allowed_option" para incluir os globais normais do engine
-- Ignorar undelines
+- Aceitar "==" e "!=" (OK)
+- Aceitar abertura de parentese e string numa linha com continuação nas próximas linhas (OK)
+
